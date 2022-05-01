@@ -4,11 +4,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class stage1 {
-    public static boolean[][] Table;
     public static int[] numbers;
     public static int sum;
     public static int n;
+    public static double score;
     public static int nbSolutions = 0;
+    public static List<String> userSolutions = new ArrayList<>();
     public static List<String> solutions = new ArrayList<>();
 
     public static void generateNumbers(){
@@ -20,7 +21,7 @@ public class stage1 {
         for (int i = 0; i < n; i++) {
             numbers[i] = rand.nextInt(100);
         }
-        sum = rand.nextInt(100);
+        sum = 40+rand.nextInt(60);
 
         for (int i = 0; i < n; i++) {
             System.out.print(numbers[i]+" ");
@@ -77,6 +78,31 @@ public class stage1 {
         }
         result = result.substring(0,result.length()-1);
         return result;
+    }
+
+    public static void calculScore(){
+        score = (nbRightSolution() / nbSolutions) * 100;
+        score = score - (nbWrongSolution() * 5);
+    }
+
+    public static int nbRightSolution(){
+        int nb=0;
+        for (int i = 0; i < userSolutions.size(); i++) {
+            if (solutions.contains(userSolutions.get(i))){
+                nb++;
+            }
+        }
+        return nb;
+    }
+
+    public static int nbWrongSolution(){
+        int nb=0;
+        for (int i = 0; i < userSolutions.size(); i++) {
+            if (! solutions.contains(userSolutions.get(i))){
+                nb++;
+            }
+        }
+        return nb;
     }
 
     public static void showSolutions(){
